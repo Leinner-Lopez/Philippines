@@ -1,23 +1,139 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'The Philippines — Six Pulses of a Rising Nation',
+	description = 'An editorial look at the Philippines across Economy, Technology, Culture, Health, Education, and Gastronomy: the good, the bad, and what comes next.',
+} = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta name="description" content={description} />
+		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
 
-<style>
+<style is:global>
+	@font-face {
+		font-family: 'DM Sans';
+		src: url('/fonts/DMSans.woff2') format('woff2');
+		font-weight: 100 1000;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	:root {
+		--color-primary: #da70d6;
+		--color-secondary: #ffc500;
+		--color-tertiary: #f08080;
+		--color-neutral: #1e293b;
+
+		--color-bg: #fdfaff;
+		--color-surface: #ffffff;
+		--color-text: var(--color-neutral);
+		--color-text-muted: color-mix(in srgb, var(--color-neutral) 60%, white);
+		--color-border: color-mix(in srgb, var(--color-neutral) 10%, white);
+
+		--gradient-hero: linear-gradient(135deg, #fdfaff 0%, #fbeeff 45%, #fff7e0 100%);
+		--gradient-brand: linear-gradient(120deg, var(--color-primary), var(--color-tertiary));
+		--gradient-cta: linear-gradient(120deg, #8b3fa0, var(--color-primary) 55%, var(--color-tertiary));
+
+		--radius-lg: 28px;
+		--radius-md: 18px;
+		--radius-sm: 12px;
+		--radius-pill: 999px;
+
+		--shadow-soft: 0 20px 45px -25px rgba(30, 41, 59, 0.35);
+		--shadow-card: 0 12px 30px -18px rgba(30, 41, 59, 0.25);
+
+		--container-width: 1180px;
+
+		color-scheme: light;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
 	html,
 	body {
 		margin: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
+	}
+
+	body {
+		font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+		background: var(--color-bg);
+		color: var(--color-text);
+		line-height: 1.5;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	img {
+		max-width: 100%;
+		display: block;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	.container {
+		width: 100%;
+		max-width: var(--container-width);
+		margin-inline: auto;
+		padding-inline: 1.5rem;
+	}
+
+	.eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+	}
+
+	.eyebrow .dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--dot-color, var(--color-primary));
+	}
+
+	section {
+		padding-block: clamp(3rem, 6vw, 5.5rem);
+	}
+
+	.text-primary {
+		color: var(--color-primary);
+	}
+	.text-secondary {
+		color: var(--color-secondary);
+	}
+	.text-tertiary {
+		color: var(--color-tertiary);
+	}
+
+	@media (max-width: 640px) {
+		.container {
+			padding-inline: 1.1rem;
+		}
 	}
 </style>

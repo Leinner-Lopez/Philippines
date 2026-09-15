@@ -1,11 +1,51 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import PillarsIntro from '../components/PillarsIntro.astro';
+import PillarSection from '../components/PillarSection.astro';
+import SpotlightBanner from '../components/SpotlightBanner.astro';
+import CTASection from '../components/CTASection.astro';
+import Footer from '../components/Footer.astro';
+import { pillars } from '../data/pillars';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const bayanihanStats = [
+	{
+		value: '180+',
+		label: 'Living Languages',
+		description: 'Native linguistic diversity across Luzon, Visayas, and Mindanao.',
+	},
+	{
+		value: '300+',
+		label: 'Annual Festivals',
+		description: 'Colorful local fiestas that keep provincial traditions alive.',
+	},
+	{
+		value: '6 Sites',
+		label: 'UNESCO World Heritage',
+		description: 'Ancient rice terraces, coral reefs, and colonial-era churches.',
+	},
+];
 ---
 
 <Layout>
-	<Welcome />
+	<Nav />
+	<main>
+		<Hero />
+		<PillarsIntro />
+		{
+			pillars.map((pillar, index) => (
+				<PillarSection pillar={pillar} reverse={index % 2 === 1} />
+			))
+		}
+		<SpotlightBanner
+			eyebrow="Bayanihan · Cultural Soul & Solidarity"
+			highlight="Bayanihan:"
+			title="no island moves alone."
+			description="The foundational ethos of Filipino life: an inherited spirit of mutual care where neighbors support one another, communities carry each other forward, and no province stands apart from the rest."
+			stats={bayanihanStats}
+		/>
+		<CTASection />
+	</main>
+	<Footer />
 </Layout>

@@ -1,0 +1,100 @@
+---
+import { pillars } from '../data/pillars';
+---
+
+<section class="intro">
+	<div class="container intro-grid">
+		<div>
+			<p class="eyebrow" style={{ '--dot-color': 'var(--color-tertiary)' }}>
+				<span class="dot"></span> Six National Pillars
+			</p>
+			<h2>The Philippines, in six pulses</h2>
+		</div>
+		<p class="lede">
+			Explore the sectors that define the country's progress today: what already works, what
+			still holds it back, and what is likely to change next.
+		</p>
+	</div>
+	<div class="container">
+		<ul class="jump-list">
+			{
+				pillars.map((pillar) => (
+					<li>
+						<a href={`#${pillar.id}`} style={{ '--accent': `var(--color-${pillar.color})` }}>
+							<span class="number">{pillar.number}</span>
+							{pillar.navLabel}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.intro-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+		align-items: end;
+		margin-bottom: 2rem;
+	}
+
+	.dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--dot-color);
+	}
+
+	h2 {
+		margin: 0.5rem 0 0;
+		font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+		font-weight: 800;
+	}
+
+	.lede {
+		color: var(--color-text-muted);
+		margin: 0;
+		max-width: 42ch;
+		justify-self: end;
+		text-align: right;
+	}
+
+	.jump-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.jump-list a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		text-decoration: none;
+		font-size: 0.82rem;
+		font-weight: 700;
+		padding: 0.6rem 1.1rem;
+		border-radius: var(--radius-pill);
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.number {
+		color: var(--accent);
+	}
+
+	@media (max-width: 760px) {
+		.intro-grid {
+			grid-template-columns: 1fr;
+		}
+		.lede {
+			justify-self: start;
+			text-align: left;
+		}
+	}
+</style>

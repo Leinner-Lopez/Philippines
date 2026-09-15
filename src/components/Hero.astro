@@ -1,0 +1,97 @@
+---
+import StatCard from './StatCard.astro';
+
+const tags = ['BBB+ Investment Grade', 'Top BPO Hub', 'Young, Bilingual Workforce'];
+---
+
+<section id="top" class="hero">
+	<div class="container hero-grid">
+		<div class="hero-copy">
+			<p class="eyebrow"><span class="dot"></span> Manila · GMT+8 · 7,641 Islands</p>
+			<h1>
+				The Philippines <span class="highlight">moves</span> across six pulses.
+			</h1>
+			<p class="lede">
+				This profile looks at the country through six lenses — Economy, Technology, Culture,
+				Health, Education, and Gastronomy — and states plainly what works, what struggles, and
+				what comes next.
+			</p>
+			<ul class="tag-list">
+				{tags.map((tag) => <li>{tag}</li>)}
+			</ul>
+		</div>
+		<div class="hero-stats">
+			<StatCard value="+5.5%" label="Average annual GDP growth" color="primary" />
+			<StatCard value="25y" label="Median age of the population" color="secondary" />
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		background: var(--gradient-hero);
+		padding-top: clamp(2.5rem, 6vw, 4.5rem);
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 1.6fr 1fr;
+		gap: 2.5rem;
+		align-items: center;
+	}
+
+	.eyebrow .dot {
+		background: var(--color-primary);
+	}
+
+	h1 {
+		font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+		line-height: 1.08;
+		margin: 0.6rem 0 1rem;
+		font-weight: 800;
+		letter-spacing: -0.01em;
+	}
+
+	.highlight {
+		background: var(--gradient-brand);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.lede {
+		font-size: 1.02rem;
+		color: var(--color-text-muted);
+		max-width: 46ch;
+		margin: 0 0 1.5rem;
+	}
+
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.tag-list li {
+		font-size: 0.75rem;
+		font-weight: 700;
+		padding: 0.5rem 0.9rem;
+		border-radius: var(--radius-pill);
+		background: color-mix(in srgb, var(--color-primary) 12%, white);
+		color: color-mix(in srgb, var(--color-primary) 70%, black);
+	}
+
+	.hero-stats {
+		display: grid;
+		gap: 1rem;
+	}
+
+	@media (max-width: 860px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

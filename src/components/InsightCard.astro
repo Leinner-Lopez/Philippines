@@ -1,0 +1,93 @@
+---
+import type { Insight } from '../data/pillars';
+
+interface Props {
+	insight: Insight;
+	kind: 'good' | 'bad' | 'expected';
+}
+
+const { insight, kind } = Astro.props;
+
+const icon = { good: '✓', bad: '!', expected: '→' }[kind];
+---
+
+<article class:list={['insight-card', kind]}>
+	<span class="icon">{icon}</span>
+	<h3>{insight.heading}</h3>
+	<ul>
+		{insight.points.map((point) => <li>{point}</li>)}
+	</ul>
+</article>
+
+<style>
+	.insight-card {
+		border-radius: var(--radius-md);
+		padding: 1.4rem 1.5rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+	}
+
+	.icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		font-size: 0.85rem;
+		font-weight: 800;
+		margin-bottom: 0.75rem;
+	}
+
+	h3 {
+		margin: 0 0 0.7rem;
+		font-size: 1rem;
+		font-weight: 800;
+	}
+
+	ul {
+		margin: 0;
+		padding-left: 1.1rem;
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	li {
+		font-size: 0.88rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+	}
+
+	.good {
+		background: color-mix(in srgb, var(--color-secondary) 10%, white);
+	}
+	.good .icon {
+		background: color-mix(in srgb, var(--color-secondary) 30%, white);
+		color: color-mix(in srgb, var(--color-secondary) 55%, black);
+	}
+	.good h3 {
+		color: color-mix(in srgb, var(--color-secondary) 55%, black);
+	}
+
+	.bad {
+		background: color-mix(in srgb, var(--color-tertiary) 10%, white);
+	}
+	.bad .icon {
+		background: color-mix(in srgb, var(--color-tertiary) 30%, white);
+		color: color-mix(in srgb, var(--color-tertiary) 60%, black);
+	}
+	.bad h3 {
+		color: color-mix(in srgb, var(--color-tertiary) 60%, black);
+	}
+
+	.expected {
+		background: color-mix(in srgb, var(--color-primary) 10%, white);
+	}
+	.expected .icon {
+		background: color-mix(in srgb, var(--color-primary) 25%, white);
+		color: color-mix(in srgb, var(--color-primary) 55%, black);
+	}
+	.expected h3 {
+		color: color-mix(in srgb, var(--color-primary) 55%, black);
+	}
+</style>

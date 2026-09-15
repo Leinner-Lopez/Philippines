@@ -1,0 +1,110 @@
+---
+interface SpotlightStat {
+	value: string;
+	label: string;
+	description: string;
+}
+
+interface Props {
+	eyebrow: string;
+	title: string;
+	highlight: string;
+	description: string;
+	stats: SpotlightStat[];
+}
+
+const { eyebrow, title, highlight, description, stats } = Astro.props;
+---
+
+<section class="spotlight">
+	<div class="container">
+		<div class="card">
+			<p class="eyebrow" style={{ '--dot-color': 'var(--color-primary)' }}>
+				<span class="dot"></span> {eyebrow}
+			</p>
+			<h2><span class="highlight">{highlight}</span> {title}</h2>
+			<p class="description">{description}</p>
+			<div class="stat-grid">
+				{
+					stats.map((stat) => (
+						<div class="stat">
+							<span class="value">{stat.value}</span>
+							<span class="label">{stat.label}</span>
+							<p>{stat.description}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.card {
+		background: linear-gradient(135deg, #fbeeff 0%, #fff7e0 100%);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: clamp(2rem, 4vw, 3rem);
+		box-shadow: var(--shadow-soft);
+	}
+
+	.dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--dot-color);
+	}
+
+	h2 {
+		margin: 0.6rem 0 0.8rem;
+		font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+		font-weight: 800;
+	}
+
+	.highlight {
+		background: var(--gradient-brand);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.description {
+		color: var(--color-text-muted);
+		max-width: 60ch;
+		margin: 0 0 2rem;
+	}
+
+	.stat-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.stat .value {
+		display: block;
+		font-size: 2rem;
+		font-weight: 800;
+	}
+
+	.stat .label {
+		display: block;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		margin: 0.2rem 0 0.5rem;
+	}
+
+	.stat p {
+		margin: 0;
+		font-size: 0.88rem;
+		color: var(--color-text-muted);
+	}
+
+	@media (max-width: 760px) {
+		.stat-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
