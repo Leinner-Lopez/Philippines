@@ -21,6 +21,7 @@ export interface Pillar {
 	image: string;
 	imageAlt: string;
 	imageCaption: string;
+	photoCredit: string;
 	stats: Stat[];
 	good: Insight;
 	bad: Insight;
@@ -37,9 +38,10 @@ export const pillars: Pillar[] = [
 		title: 'A resilient economy that keeps expanding',
 		description:
 			'The Philippines sustains one of the fastest-growing economies in Southeast Asia. Business process outsourcing, overseas remittances, and a young, consumption-driven population power its steady expansion.',
-		image: 'https://picsum.photos/seed/ph-economy/900/700',
-		imageAlt: 'Modern skyline of a business district in the Philippines',
-		imageCaption: 'Metro Manila · Financial District',
+		image: '/images/economy.jpg',
+		imageAlt: 'Aerial view of the Makati skyline surrounded by dense residential neighborhoods in Metro Manila',
+		imageCaption: 'Makati Skyline · Metro Manila',
+		photoCredit: 'Photo: Patrick Roque, Wikimedia Commons (CC BY-SA 4.0)',
 		stats: [
 			{ value: '+5.5%', label: 'Average annual GDP growth' },
 			{ value: '$38B+', label: 'Yearly remittance inflows' },
@@ -78,9 +80,10 @@ export const pillars: Pillar[] = [
 		title: 'A digital economy that moves fast',
 		description:
 			'Filipinos rank among the world leaders in time spent online and on social media. Fintech apps, e-commerce, and a bilingual IT workforce drive the country toward a mobile-first digital future.',
-		image: 'https://picsum.photos/seed/ph-technology/900/700',
-		imageAlt: 'People collaborating around laptops in a tech office',
-		imageCaption: 'Digital & IT-BPM Sector',
+		image: '/images/technology.jpg',
+		imageAlt: 'Aerial view of the Cebu IT Park skyline, a major business and technology hub',
+		imageCaption: 'Cebu IT Park · Cebu City',
+		photoCredit: 'Photo: ZackShire51, Wikimedia Commons (CC BY-SA 4.0)',
 		stats: [
 			{ value: 'Top 5', label: 'Global internet usage time' },
 			{ value: '1.5M+', label: 'IT-BPM professionals employed' },
@@ -119,9 +122,10 @@ export const pillars: Pillar[] = [
 		title: 'A diverse culture built on community',
 		description:
 			'Filipino culture blends indigenous roots, Spanish heritage, and American influence into an identity centered on family, hospitality, and Bayanihan — the spirit of communal support.',
-		image: 'https://picsum.photos/seed/ph-culture/900/700',
-		imageAlt: 'Traditional festival celebration with colorful costumes',
-		imageCaption: 'Regional Festival Tradition',
+		image: '/images/culture.jpg',
+		imageAlt: 'Devotees in elaborate gold costumes carrying Santo Niño images during the Sinulog Festival in Cebu',
+		imageCaption: 'Sinulog Festival · Cebu City',
+		photoCredit: 'Photo: Ranieljosecastaneda, Wikimedia Commons (CC BY-SA 4.0)',
 		stats: [
 			{ value: '180+', label: 'Living native languages' },
 			{ value: '300+', label: 'Annual local festivals' },
@@ -160,9 +164,10 @@ export const pillars: Pillar[] = [
 		title: 'A healthcare system in transition',
 		description:
 			'The Philippines expands universal coverage through PhilHealth while its nurses and doctors remain among the most sought-after medical professionals in the world.',
-		image: 'https://picsum.photos/seed/ph-health/900/700',
-		imageAlt: 'Healthcare professionals attending to a patient',
-		imageCaption: 'Universal Health Care Program',
+		image: '/images/health.jpg',
+		imageAlt: 'Main entrance building of the Philippine General Hospital in Manila',
+		imageCaption: 'Philippine General Hospital · Manila',
+		photoCredit: 'Photo: Zenji89, Wikimedia Commons (Public Domain)',
 		stats: [
 			{ value: '~70y', label: 'Average life expectancy' },
 			{ value: '100M+', label: 'Citizens covered by PhilHealth' },
@@ -201,9 +206,10 @@ export const pillars: Pillar[] = [
 		title: 'A young, bilingual generation ready to compete',
 		description:
 			'The Philippines maintains a high literacy rate and produces a young, English-proficient workforce that fuels its service-driven economy and global outsourcing industry.',
-		image: 'https://picsum.photos/seed/ph-education/900/700',
-		imageAlt: 'Students studying together in a classroom',
-		imageCaption: 'K to 12 Education System',
+		image: '/images/education.jpg',
+		imageAlt: 'Quezon Hall, the main administration building of the University of the Philippines Diliman',
+		imageCaption: 'University of the Philippines · Diliman',
+		photoCredit: 'Photo: Patrick Roque, Wikimedia Commons (CC BY-SA 4.0)',
 		stats: [
 			{ value: '96%+', label: 'Adult literacy rate' },
 			{ value: '25y', label: 'Median population age' },
@@ -242,9 +248,10 @@ export const pillars: Pillar[] = [
 		title: 'Flavors shaped by centuries of exchange',
 		description:
 			'Filipino cuisine mixes native, Malay, Chinese, and Spanish influences into comfort dishes built around rice, vinegar, and communal eating traditions like kamayan feasts.',
-		image: 'https://picsum.photos/seed/ph-gastronomy/900/700',
-		imageAlt: 'Traditional Filipino dish served on a wooden table',
-		imageCaption: 'Heirloom Filipino Adobo',
+		image: '/images/gastronomy.jpg',
+		imageAlt: 'A plate of Filipino chicken adobo served with garlic rice and boiled egg',
+		imageCaption: 'Chicken Adobo with Garlic Rice',
+		photoCredit: 'Photo: Ian Lopez, Wikimedia Commons (CC BY-SA 4.0)',
 		stats: [
 			{ value: '7,000+', label: 'Islands with local recipes' },
 			{ value: '3', label: 'Major culinary influences' },

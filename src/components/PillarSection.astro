@@ -22,10 +22,13 @@ const { pillar, reverse = false } = Astro.props;
 		</header>
 
 		<div class:list={['intro-grid', { reverse }]}>
-			<figure class="image-frame">
-				<img src={pillar.image} alt={pillar.imageAlt} loading="lazy" />
-				<figcaption>{pillar.imageCaption}</figcaption>
-			</figure>
+			<div>
+				<figure class="image-frame">
+					<img src={pillar.image} alt={pillar.imageAlt} loading="lazy" />
+					<figcaption>{pillar.imageCaption}</figcaption>
+				</figure>
+				<p class="credit">{pillar.photoCredit}</p>
+			</div>
 			<div class="intro-copy">
 				<p class="description">{pillar.description}</p>
 				<div class="stat-row">
@@ -88,6 +91,13 @@ const { pillar, reverse = false } = Astro.props;
 		overflow: hidden;
 		box-shadow: var(--shadow-soft);
 		position: relative;
+	}
+
+	.credit {
+		margin: 0.5rem 0 0;
+		font-size: 0.7rem;
+		color: var(--color-text-muted);
+		text-align: right;
 	}
 
 	.image-frame img {
