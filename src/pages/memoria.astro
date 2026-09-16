@@ -1,0 +1,423 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { pillars } from '../data/pillars';
+
+// 4 pairs (8 cards): one headline stat from four of the six pillars.
+const cards = pillars.slice(0, 4).map((pillar) => ({
+	pairId: pillar.id,
+	color: pillar.color,
+	number: pillar.number,
+	navLabel: pillar.navLabel,
+	value: pillar.stats[0].value,
+	label: pillar.stats[0].label,
+}));
+
+const pairCount = cards.length;
+---
+
+<Layout
+	title="Memory Game — The Philippines Country Profile"
+	description="Match each figure to its story across the six pillars of the Philippines: Economy, Technology, Culture, Health, Education, and Gastronomy."
+>
+	<Nav />
+	<main>
+		<section class="game-intro">
+			<div class="container intro-grid">
+				<div>
+					<p class="eyebrow" style={{ '--dot-color': 'var(--color-primary)' }}>
+						<span class="dot"></span> Interactive · Memory Challenge
+					</p>
+					<h1>Match the pulse to its number.</h1>
+				</div>
+				<p class="lede">
+					Flip the cards and pair every figure with the story behind it, across all six pillars
+					of the country profile.
+				</p>
+			</div>
+		</section>
+
+		<section class="game">
+			<div class="container">
+				<div class="game-panel">
+					<div class="game-status">
+						<div class="status-stat">
+							<span class="status-value" id="moves">0</span>
+							<span class="status-label">Moves</span>
+						</div>
+						<div class="status-stat">
+							<span class="status-value" id="matches">0/{pairCount}</span>
+							<span class="status-label">Pairs found</span>
+						</div>
+						<button type="button" id="restart" class="restart-btn">Play again</button>
+					</div>
+
+					<p class="win-message" id="win-message">
+						🎉 Solved in <span id="win-moves"></span> moves — every pillar paired up.
+					</p>
+
+					<div class="board" id="board">
+						{
+							cards.map((card) => (
+								<>
+									<button
+										type="button"
+										class="card"
+										data-pair={card.pairId}
+										style={{ '--accent': `var(--color-${card.color})` }}
+									>
+										<span class="card-inner">
+											<span class="card-face card-back">
+												<span class="back-mark" />
+											</span>
+											<span class="card-face card-front">
+												<span class="pillar-tag">{card.number}</span>
+												<span class="content value">{card.value}</span>
+											</span>
+										</span>
+									</button>
+									<button
+										type="button"
+										class="card"
+										data-pair={card.pairId}
+										style={{ '--accent': `var(--color-${card.color})` }}
+									>
+										<span class="card-inner">
+											<span class="card-face card-back">
+												<span class="back-mark" />
+											</span>
+											<span class="card-face card-front">
+												<span class="pillar-tag">{card.number}</span>
+												<span class="content label">{card.label}</span>
+											</span>
+										</span>
+									</button>
+								</>
+							))
+						}
+					</div>
+				</div>
+
+				<a class="back-link" href="/">← Back to overview</a>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
+
+<script>
+	const board = document.getElementById('board') as HTMLElement;
+	const movesEl = document.getElementById('moves') as HTMLElement;
+	const matchesEl = document.getElementById('matches') as HTMLElement;
+	const restartBtn = document.getElementById('restart') as HTMLButtonElement;
+	const winMessage = document.getElementById('win-message') as HTMLElement;
+	const winMoves = document.getElementById('win-moves') as HTMLElement;
+
+	const cards = Array.from(board.querySelectorAll<HTMLButtonElement>('.card'));
+	const totalPairs = cards.length / 2;
+
+	let firstCard: HTMLButtonElement | null = null;
+	let lock = false;
+	let moves = 0;
+	let matches = 0;
+
+	function shuffle() {
+		const shuffled = [...cards].sort(() => Math.random() - 0.5);
+		shuffled.forEach((card) => board.appendChild(card));
+	}
+
+	function updateStatus() {
+		movesEl.textContent = String(moves);
+		matchesEl.textContent = `${matches}/${totalPairs}`;
+	}
+
+	function resetCard(card: HTMLButtonElement) {
+		card.classList.remove('flipped', 'matched');
+	}
+
+	function handleClick(card: HTMLButtonElement) {
+		if (lock || card === firstCard || card.classList.contains('matched')) return;
+
+		card.classList.add('flipped');
+
+		if (!firstCard) {
+			firstCard = card;
+			return;
+		}
+
+		moves += 1;
+		updateStatus();
+
+		if (firstCard.dataset.pair === card.dataset.pair) {
+			firstCard.classList.add('matched');
+			card.classList.add('matched');
+			firstCard = null;
+			matches += 1;
+			updateStatus();
+
+			if (matches === totalPairs) {
+				winMoves.textContent = String(moves);
+				winMessage.classList.add('visible');
+			}
+			return;
+		}
+
+		lock = true;
+		const wrongFirst = firstCard;
+		const wrongSecond = card;
+		firstCard = null;
+
+		setTimeout(() => {
+			resetCard(wrongFirst);
+			resetCard(wrongSecond);
+			lock = false;
+		}, 700);
+	}
+
+	function startGame() {
+		cards.forEach((card) => {
+			resetCard(card);
+			card.disabled = false;
+		});
+		shuffle();
+		firstCard = null;
+		lock = false;
+		moves = 0;
+		matches = 0;
+		winMessage.classList.remove('visible');
+		updateStatus();
+	}
+
+	cards.forEach((card) => {
+		card.addEventListener('click', () => handleClick(card));
+	});
+	restartBtn.addEventListener('click', startGame);
+
+	startGame();
+</script>
+
+<style>
+	.game-intro {
+		padding-bottom: 1.5rem;
+	}
+
+	.intro-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+		align-items: end;
+	}
+
+	.dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--dot-color);
+	}
+
+	h1 {
+		margin: 0.5rem 0 0;
+		font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+		font-weight: 800;
+	}
+
+	.lede {
+		color: var(--color-text-muted);
+		margin: 0;
+		max-width: 42ch;
+		justify-self: end;
+		text-align: right;
+	}
+
+	.game {
+		padding-top: 0;
+	}
+
+	.game-panel {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: clamp(1.25rem, 3vw, 2rem);
+		box-shadow: var(--shadow-card);
+	}
+
+	.game-status {
+		display: flex;
+		align-items: center;
+		gap: 1.75rem;
+		flex-wrap: wrap;
+		margin-bottom: 1.5rem;
+	}
+
+	.status-stat {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.1;
+	}
+
+	.status-value {
+		font-size: 1.4rem;
+		font-weight: 800;
+		color: var(--color-primary);
+	}
+
+	.status-label {
+		font-size: 0.72rem;
+		font-weight: 600;
+		color: var(--color-text-muted);
+	}
+
+	.restart-btn {
+		margin-left: auto;
+		background: var(--gradient-brand);
+		color: white;
+		font-size: 0.78rem;
+		font-weight: 700;
+		border: none;
+		cursor: pointer;
+		padding: 0.65rem 1.2rem;
+		border-radius: var(--radius-pill);
+	}
+
+	.win-message {
+		display: none;
+		background: color-mix(in srgb, var(--color-secondary) 18%, white);
+		color: color-mix(in srgb, var(--color-secondary) 55%, black);
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 0.75rem 1.1rem;
+		border-radius: var(--radius-md);
+		margin: 0 0 1.5rem;
+	}
+
+	.win-message.visible {
+		display: block;
+	}
+
+	.board {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.85rem;
+	}
+
+	.card {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		perspective: 1000px;
+		aspect-ratio: 3 / 4;
+	}
+
+	.card:disabled {
+		cursor: default;
+	}
+
+	.card-inner {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		transition: transform 0.45s ease;
+		transform-style: preserve-3d;
+	}
+
+	.card.flipped .card-inner,
+	.card.matched .card-inner {
+		transform: rotateY(180deg);
+	}
+
+	.card-face {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		border-radius: var(--radius-md);
+		backface-visibility: hidden;
+		padding: 0.5rem;
+	}
+
+	.card-back {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-card);
+	}
+
+	.back-mark {
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		background: var(--gradient-brand);
+		opacity: 0.7;
+	}
+
+	.card-front {
+		background: color-mix(in srgb, var(--accent) 10%, white);
+		border: 1px solid var(--accent);
+		transform: rotateY(180deg);
+		gap: 0.3rem;
+	}
+
+	.pillar-tag {
+		font-size: 0.62rem;
+		font-weight: 800;
+		letter-spacing: 0.05em;
+		color: var(--accent);
+		opacity: 0.75;
+	}
+
+	.content {
+		font-weight: 700;
+		color: var(--color-text);
+		line-height: 1.15;
+	}
+
+	.content.value {
+		font-size: 1.05rem;
+		color: var(--accent);
+		font-weight: 800;
+	}
+
+	.content.label {
+		font-size: 0.66rem;
+		color: var(--color-text-muted);
+		font-weight: 600;
+	}
+
+	.card.matched .card-front {
+		opacity: 0.55;
+	}
+
+	.back-link {
+		display: inline-flex;
+		margin-top: 1.5rem;
+		font-size: 0.82rem;
+		font-weight: 700;
+		text-decoration: none;
+		color: var(--color-text-muted);
+	}
+
+	@media (max-width: 860px) {
+		.intro-grid {
+			grid-template-columns: 1fr;
+		}
+		.lede {
+			justify-self: start;
+			text-align: left;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.board {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0.6rem;
+		}
+		.restart-btn {
+			margin-left: 0;
+		}
+	}
+</style>

@@ -5,7 +5,7 @@ import { pillars } from '../data/pillars';
 <header class="nav-wrap">
 	<div class="container">
 		<nav class="nav-pill">
-			<a class="brand" href="#top">
+			<a class="brand" href="/#top">
 				<span class="brand-title">PHILIPPINES</span>
 				<span class="brand-subtitle">Country Profile</span>
 			</a>
@@ -13,15 +13,21 @@ import { pillars } from '../data/pillars';
 				{
 					pillars.map((pillar) => (
 						<li>
-							<a href={`#${pillar.id}`}>
+							<a href={`/#${pillar.id}`}>
 								<span class="dot" style={{ background: `var(--color-${pillar.color})` }} />
 								{pillar.navLabel}
 							</a>
 						</li>
 					))
 				}
+				<li>
+					<a href="/memoria">
+						<span class="dot" style={{ background: 'var(--gradient-brand)' }} />
+						Memory Game
+					</a>
+				</li>
 			</ul>
-			<a class="cta" href="#briefing">2026 Overview</a>
+			<a class="cta" href="/#briefing">2026 Overview</a>
 		</nav>
 	</div>
 </header>

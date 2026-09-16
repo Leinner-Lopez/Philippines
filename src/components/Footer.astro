@@ -11,10 +11,13 @@ const year = new Date().getFullYear();
 			{
 				pillars.map((pillar) => (
 					<li>
-						<a href={`#${pillar.id}`}>{pillar.navLabel}</a>
+						<a href={`/#${pillar.id}`}>{pillar.navLabel}</a>
 					</li>
 				))
 			}
+			<li>
+				<a href="/memoria">Memory Game</a>
+			</li>
 		</ul>
 	</div>
 </footer>
